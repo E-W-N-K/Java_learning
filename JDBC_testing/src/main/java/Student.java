@@ -17,6 +17,12 @@ public class Student {
 
     public Student() {}
 
+    public Student(String name, String surname, String course_name) {
+        this.name = name;
+        this.surname = surname;
+        this.course_name = course_name;
+    }
+
     public Student(int id, String name, String surname, String course_name) {
         this.id = id;
         this.name = name;
