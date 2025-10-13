@@ -117,8 +117,6 @@ public class CRUDUtils {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            //обновлять все id
         }
     }
 }
