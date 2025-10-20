@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "photos")
-public class Photo {
+@Table(name = "page_blocks")
+public class PageBlock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,14 +16,14 @@ public class Photo {
     @JoinColumn(name = "page_element_id", nullable = false, unique = true)
     private PageElement pageElement;
 
-    @Column(name = "url", length = 1024)
-    private String url;
+    @Column(name = "html_content", columnDefinition = "TEXT")
+    private String htmlContent;
 
-    public Photo() {}
+    public PageBlock() {}
 
-    public Photo(PageElement pageElement, String url) {
+    public PageBlock(PageElement pageElement, String htmlContent) {
         this.pageElement = pageElement;
-        this.url = url;
+        this.htmlContent = htmlContent;
     }
 
     public Long getId() {
@@ -42,11 +42,11 @@ public class Photo {
         this.pageElement = pageElement;
     }
 
-    public String getUrl() {
-        return url;
+    public String getHtmlContent() {
+        return htmlContent;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setHtmlContent(String htmlContent) {
+        this.htmlContent = htmlContent;
     }
 }
