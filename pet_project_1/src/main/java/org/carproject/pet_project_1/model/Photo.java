@@ -1,8 +1,6 @@
 package org.carproject.pet_project_1.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "photos")
