@@ -39,7 +39,6 @@ public class PageElement {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -47,7 +46,6 @@ public class PageElement {
     public Long getPageId() {
         return pageId;
     }
-
     public void setPageId(Long pageId) {
         this.pageId = pageId;
     }
@@ -55,7 +53,6 @@ public class PageElement {
     public Integer getOrderNum() {
         return orderNum;
     }
-
     public void setOrderNum(Integer orderNum) {
         this.orderNum = orderNum;
     }
@@ -63,7 +60,6 @@ public class PageElement {
     public ElementType getElementType() {
         return elementType;
     }
-
     public void setElementType(ElementType elementType) {
         this.elementType = elementType;
     }
@@ -71,7 +67,6 @@ public class PageElement {
     public PageBlock getPageBlock() {
         return pageBlock;
     }
-
     public void setPageBlock(PageBlock pageBlock) {
         this.pageBlock = pageBlock;
     }
@@ -79,7 +74,6 @@ public class PageElement {
     public Photo getPhoto() {
         return photo;
     }
-
     public void setPhoto(Photo photo) {
         this.photo = photo;
     }

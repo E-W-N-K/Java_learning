@@ -15,13 +15,9 @@ public class Topic {
     @Column(unique = true)
     private String slug;
 
-    @Column(name = "sort_order")
-    private Integer sortOrder;
-
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -29,7 +25,6 @@ public class Topic {
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
@@ -37,16 +32,8 @@ public class Topic {
     public String getSlug() {
         return slug;
     }
-
     public void setSlug(String slug) {
         this.slug = slug;
     }
 
-    public Integer getSortOrder() {
-        return sortOrder;
-    }
-
-    public void setSortOrder(Integer sortOrder) {
-        this.sortOrder = sortOrder;
-    }
 }

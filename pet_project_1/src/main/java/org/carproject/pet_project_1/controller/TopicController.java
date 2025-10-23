@@ -18,7 +18,7 @@ public class TopicController {
 
     @GetMapping
     public ResponseEntity<List<TopicDTO>> getAllTopics() {
-        List<Topic> topics = topicRepository.findAllByOrderBySortOrderAsc();
+        List<Topic> topics = topicRepository.findAllByOrderByTitleAsc();
         List<TopicDTO> dtos = topics.stream()
                 .map(t -> new TopicDTO(t.getId(), t.getTitle(), t.getSlug()))
                 .toList();

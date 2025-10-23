@@ -13,6 +13,7 @@ public class PageContentDTO {
         this.elements = elements;
     }
 
+    // Геттеры и сеттеры
     public Long getPageId() { return pageId; }
     public List<ElementDTO> getElements() { return elements; }
 

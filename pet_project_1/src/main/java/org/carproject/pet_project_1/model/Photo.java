@@ -27,7 +27,6 @@ public class Photo {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -35,7 +34,6 @@ public class Photo {
     public PageElement getPageElement() {
         return pageElement;
     }
-
     public void setPageElement(PageElement pageElement) {
         this.pageElement = pageElement;
     }
@@ -43,8 +41,8 @@ public class Photo {
     public String getUrl() {
         return url;
     }
-
     public void setUrl(String url) {
         this.url = url;
     }
+
 }

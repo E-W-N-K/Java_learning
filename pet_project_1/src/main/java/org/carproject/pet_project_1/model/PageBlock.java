@@ -29,7 +29,6 @@ public class PageBlock {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -37,7 +36,6 @@ public class PageBlock {
     public PageElement getPageElement() {
         return pageElement;
     }
-
     public void setPageElement(PageElement pageElement) {
         this.pageElement = pageElement;
     }
@@ -45,8 +43,8 @@ public class PageBlock {
     public String getHtmlContent() {
         return htmlContent;
     }
-
     public void setHtmlContent(String htmlContent) {
         this.htmlContent = htmlContent;
     }
+
 }
