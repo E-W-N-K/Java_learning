@@ -3,6 +3,7 @@ package org.carproject.pet_project_1.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,23 +35,31 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests(auth -> auth
-                        // Публичные эндпоинты - доступны всем
-                        .requestMatchers("/api/auth/**", "/api/topics", "/api/pages/{id}", "/api/pages/{id}/comments", "/uploads/**", "/images/**").permitAll()
+                        // 1. Публичные (без проверки токена)
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/topics").permitAll()
+                        .requestMatchers("/uploads/**").permitAll()
+                        .requestMatchers("/images/**").permitAll()
 
-                        // Только зарегистрированные пользователи (USER или ADMIN) могут добавлять комментарии
-                        .requestMatchers("/api/pages/{id}/comments").hasAnyRole("USER", "ADMIN")
+                        // 2. GET все запросы к /api/pages/** - доступны ВСЕ (без токена!)
+                        .requestMatchers(HttpMethod.GET, "/api/pages/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/pages/**/comments").permitAll()
 
-                        // **[ИЗМЕНЕНО]** Только ADMIN может удалять элементы (блоки)
-                        .requestMatchers("/api/pages/element/{elementId}").hasRole("ADMIN")
 
-                        // Все остальные требуют аутентификации
+                        // 3. DELETE - только ADMIN
+                        .requestMatchers(HttpMethod.DELETE, "/api/pages/element/**").hasRole("ADMIN")
+
+                        // 4. POST к комментариям - только авторизованные
+                        .requestMatchers(HttpMethod.POST, "/api/pages/**").authenticated()
+
+                        // 5. Всё остальное
                         .anyRequest().authenticated()
                 );
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
