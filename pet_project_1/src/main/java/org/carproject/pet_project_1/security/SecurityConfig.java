@@ -28,19 +28,25 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors().and() // Включаем CORS
-                .csrf().disable() // Отключаем CSRF (используем JWT в HttpOnly cookie)
+                .cors().and()
+                .csrf().disable()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Без сессий на сервере
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests(auth -> auth
-                        // Публичные эндпоинты (доступны без аутентификации)
-                        .requestMatchers("/api/auth/**", "/api/topics", "/api/pages/**", "/uploads/**", "/images/**").permitAll()
+                        // Публичные эндпоинты - доступны всем
+                        .requestMatchers("/api/auth/**", "/api/topics", "/api/pages/{id}", "/api/pages/{id}/comments", "/uploads/**", "/images/**").permitAll()
+
+                        // Только зарегистрированные пользователи (USER или ADMIN) могут добавлять комментарии
+                        .requestMatchers("/api/pages/{id}/comments").hasAnyRole("USER", "ADMIN")
+
+                        // **[ИЗМЕНЕНО]** Только ADMIN может удалять элементы (блоки)
+                        .requestMatchers("/api/pages/element/{elementId}").hasRole("ADMIN")
+
                         // Все остальные требуют аутентификации
                         .anyRequest().authenticated()
                 );
 
-        // Добавляем JWT-фильтр перед стандартным фильтром аутентификации
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
@@ -48,7 +54,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Для хэширования паролей
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -56,14 +62,13 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    // Конфигурация CORS для работы с React
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // Адрес React-приложения
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setAllowCredentials(true); // ВАЖНО: для передачи cookies
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

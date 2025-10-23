@@ -1,6 +1,7 @@
 package org.carproject.pet_project_1.dto;
 
 public class ElementDTO {
+    private Long id;
     private String type; // "block" или "photo"
     private Integer orderNum;
     private String htmlContent; // для блоков
@@ -10,8 +11,9 @@ public class ElementDTO {
     public ElementDTO() {}
 
     // Конструктор для блока
-    public static ElementDTO createBlock(Integer orderNum, String htmlContent) {
+    public static ElementDTO createBlock(Long id, Integer orderNum, String htmlContent) {
         ElementDTO dto = new ElementDTO();
+        dto.id = id;
         dto.type = "block";
         dto.orderNum = orderNum;
         dto.htmlContent = htmlContent;
@@ -19,8 +21,9 @@ public class ElementDTO {
     }
 
     // Конструктор для фото
-    public static ElementDTO createPhoto(Integer orderNum, String url, Long photoId) {
+    public static ElementDTO createPhoto(Long id, Integer orderNum, String url, Long photoId) {
         ElementDTO dto = new ElementDTO();
+        dto.id = id;
         dto.type = "photo";
         dto.orderNum = orderNum;
         dto.url = url;
@@ -34,10 +37,16 @@ public class ElementDTO {
     public String getHtmlContent() { return htmlContent; }
     public String getUrl() { return url; }
     public Long getPhotoId() { return photoId; }
+    public Long getId() {
+        return id;
+    }
 
     public void setType(String type) { this.type = type; }
     public void setOrderNum(Integer orderNum) { this.orderNum = orderNum; }
     public void setHtmlContent(String htmlContent) { this.htmlContent = htmlContent; }
     public void setUrl(String url) { this.url = url; }
     public void setPhotoId(Long photoId) { this.photoId = photoId; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
